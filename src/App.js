@@ -12,6 +12,10 @@ import EmpDetails from "./components/employee/EmpDetails";
 import EmpForm from "./components/employee/EmpForm";
 import DeptList from "./components/department/DeptList";
 import DeptDetails from "./components/department/DeptDetails";
+import DeptForm from "./components/department/DeptForm";
+import ContList from "./components/contract/ContList";
+import ContDetails from "./components/contract/ContDetails";
+import ContForm from "./components/contract/ContForm";
 
 function App() {
     return (
@@ -23,10 +27,18 @@ function App() {
                     <Route path="/" element={<MainContent/>}/>
                     <Route path="/employees" element={<EmpList/>}/>
                     <Route path="/employees/details/:empId" element={<EmpDetails/>}/>
+                    <Route path="/employees/details/" element={<EmpList/>}/>
                     <Route path="/employees/edit/:empId" element={<EmpForm/>}/>
                     <Route path="/employees/add" element={<EmpForm/>}/>
                     <Route path="/departments" element={<DeptList/>}/>
                     <Route path="/departments/details/:deptId" element={<DeptDetails/>}/>
+                    <Route path="/departments/details/" element={<DeptList/>}/>
+                    <Route path="/departments/edit/:deptId" element={<DeptForm/>}/>
+                    <Route path="/departments/add" element={<DeptForm/>}/>
+                    <Route path="/contracts" element={<ContList/>}/>
+                    <Route path="/contracts/details/:contId" element={<ContDetails/>}/>
+                    <Route path="/contracts/edit/:contId" element={<ContForm/>}/>
+                    <Route path="/contracts/add" element={<ContForm/>}/>
                 </Routes>
                 <Footer/>
             </>

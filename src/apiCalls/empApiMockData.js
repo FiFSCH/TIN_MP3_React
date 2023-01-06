@@ -23,7 +23,11 @@ export const empDetailsList = [{
     "phone": "4206921370",
     'email': 'sample@mail.com',
     "supervisor": '',
-    "department": ''
+    "department": {
+        "id": 1,
+        "name": "IT",
+        "loc": "Zielonka"
+    }
 },
     {
         "id": 2,
@@ -33,7 +37,17 @@ export const empDetailsList = [{
         "employmentEnd": '',
         "phone": "2137690420",
         'email': 'sample2@mail.com',
-        "supervisor": '',
-        "department": ''
+        "supervisor": {
+            "id": 1,
+            "firstName": 'Jane',
+            "lastname": 'Doe',
+            "phone": "4206921370",
+            'email': 'sample@mail.com'
+        },
+        "department": {
+            "id": 1,
+            "name": "IT",
+            "loc": "Zielonka"
+        }
     }
 ];

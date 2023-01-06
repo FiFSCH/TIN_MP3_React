@@ -27,11 +27,15 @@ const EmpDetails = () => {
                 <label htmlFor="email">Email address: </label>
                 <input type="email" id="email" name="email" value={emp.email} disabled/>
                 <label htmlFor="supervisor"><Link
-                    to={`/employees/details/${emp.supervisor.id}`}>Supervisor: </Link></label>
+                    to={`/employees/details/${!emp.supervisor.id ? '' : emp.supervisor.id} `}>Supervisor: </Link></label>
                 <input type="text" id="supervisor" name="supervisor"
-                       value={emp.supervisor} disabled required/>
-                <label htmlFor="dept">Department: </label>
-                <input type="text" id="dept" name="dept" value={emp.department} disabled/>
+                       value={!emp.supervisor.firstName ? '' : (emp.supervisor.firstName + ' ' + emp.supervisor.lastname)}
+                       disabled required/>
+                <label htmlFor="dept"><Link
+                    to={`/departments/details/${!emp.department.id ? '' : emp.department.id}`}>Department: </Link></label>
+                <input type="text" id="dept" name="dept"
+                       value={!emp.department.name ? '' : (emp.department.name + ', ' + emp.department.loc)}
+                       disabled/>
 
                 <div className="form-buttons">
                     <Link to={`/employees/edit/${emp.id}`} className="list-actions-button-edit">
