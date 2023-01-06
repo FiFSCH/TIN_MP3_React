@@ -1,0 +1,389 @@
+html {
+    background-color: #ecf0f1;
+    font-family: sans-serif;
+}
+
+body {
+    min-width: 360px;
+}
+
+header, main, footer {
+    background-color: white;
+}
+
+header, main, footer, nav {
+    margin: 1rem;
+}
+
+header, footer {
+    background-color: #34495e;
+    color: white;
+    padding: 1rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header h1 {
+
+}
+
+header img {
+
+}
+
+nav {
+    background-color: #bdc3c7;
+}
+
+nav ul {
+    display: flex;
+    padding: 0;
+    list-style-type: none;
+}
+
+
+nav ul li a {
+    display: inline-block;
+    color: #2c3e50;
+    padding: 1rem 2rem;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #95a5a6;
+    color: #ecf0f1;
+}
+
+nav ul li a.active {
+    background-color: #95a5a6;
+    color: #ecf0f1;
+}
+
+main {
+    padding: 1.5rem
+}
+
+footer {
+    text-align: center
+}
+
+main h2 {
+    border-bottom: 1px solid #7f8c8d;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    border-bottom: 1px solid #7f8c8d;
+}
+
+.table-list {
+    border-collapse: collapse;
+    color: #2c3e50;
+    width: 100%;
+}
+
+.table-list,
+.table-list th,
+.table-list td,
+.table-list-resDept,
+.table-list-resDept th,
+.table-list-resDept td {
+    border: 1px solid #bdc3c7;
+}
+
+.table-list th,
+.table-list td,
+.table-list-resDept th,
+.table-list-resDept td {
+    padding: 0.5rem;
+}
+
+.table-list th, .table-list tbody tr:nth-child(even),
+.table-list-resDept th, .table-list-resDept tbody tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+.table-list-resDept {
+    border-collapse: collapse;
+    color: #2c3e50;
+    width: 60%;
+    padding: 2rem;
+}
+
+td, th {
+    text-align: center;
+}
+
+.list-actions {
+    margin: 0;
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-actions li {
+    display: inline-block;
+}
+
+.list-actions-button-delete, .list-actions-button-details, .list-actions-button-edit, .button-cancel {
+    display: inline-block;
+    width: 75px;
+    padding: 0.25rem 0.5rem;
+}
+
+.list-actions-button-delete, .list-actions-button-details, .list-actions-button-edit, .button-cancel, .button-add, .button-submit {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.list-actions-button-details, .list-actions-button-delete {
+    margin-right: 1rem;
+}
+
+.list-actions-button-edit, .button-cancel {
+    margin-right: 1rem;
+}
+
+.button-submit, .button-cancel {
+    margin-right: 1rem;
+}
+
+.list-actions-button-details {
+    background-color: #2980b9;
+}
+
+.list-actions-button-details:hover {
+    background-color: #3498db;
+}
+
+.list-actions-button-edit {
+    background-color: #f39c12;
+}
+
+.list-actions-button-edit:hover {
+    background-color: #f1c40f;
+}
+
+.list-actions-button-delete {
+    background-color: #c0392b;
+}
+
+.list-actions-button-delete:hover {
+    background-color: #e74c3c;
+}
+
+.button-cancel {
+    background-color: #9c9c9c;
+}
+
+.button-cancel:hover {
+    background-color: #bab8b8;
+}
+
+.button-add, .button-cancel, .button-submit, .list-actions-button-edit {
+    padding: 0.5rem 1rem;
+}
+
+.button-add, .button-submit {
+    background-color: #27ae60;
+}
+
+.button-add:hover, .button-submit:hover {
+    background-color: #2ecc71;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+textarea {
+    overflow: auto;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 150px 300px 1fr;
+    gap: 1rem;
+}
+
+.form select,
+.form input[type="text"],
+.form input[type="date"],
+.form input[type="email"],
+.form input[type="password"] {
+    border: 1px solid #7f8c8d;
+    color: #2c3e50;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.loginField {
+    display: block;
+    border: 1px solid #7f8c8d;
+    color: #2c3e50;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.loggedAs {
+    display: block;
+}
+
+.loginButton {
+    width: 100%;
+    margin-top: 10px;
+    padding: 0.5rem 1rem;
+    background-color: #27ae60;
+    border-radius: 10px;
+}
+
+#loginErrors {
+    color: red;
+}
+
+#logoutButton {
+    margin-top: 10px;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: #e33636;
+    border-radius: 10px;
+}
+
+#logoutButton:hover {
+    background-color: #e67575;
+}
+
+.loginButton:hover {
+    background-color: #2ecc71;
+}
+
+.form label {
+    grid-column: 1/2;
+}
+
+.required-field, .errors-text {
+    color: red;
+}
+
+.form-buttons {
+    grid-column: 1/ span 2;
+}
+
+.list-actions-button-edit, .button-cancel, .button-submit {
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form input.error-input,
+.form select.error-input {
+    border: 3px solid red;
+}
+
+.errors-text {
+    display: block;
+    font-size: 0.85em;
+    line-height: 2.25rem;
+    margin-top: 0.5em;
+}
+
+@media all and (max-width: 720px) {
+    header {
+        flex-direction: column;
+    }
+
+    header h1 {
+        text-align: center;
+    }
+
+    header img {
+        align-self: center;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+    }
+
+    nav ul li {
+        flex-basis: 50%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+    }
+
+    .form {
+        grid-template-columns: 1fr;
+        row-gap: unset;
+        margin-left: unset;
+    }
+
+    .form-buttons {
+        grid-column: 1/1;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        content: attr(data-label);
+        display: flex;
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+    }
+
+}
+
+@media all and (max-width: 400px) {
+    body,
+    nav,
+    nav ul,
+    header,
+    main,
+    footer {
+        margin: 0;
+    }
+
+    nav ul li {
+        flex-basis: 100%;
+    }
+
+}
+
+#logo {
+    border-radius: 5px;
+}
