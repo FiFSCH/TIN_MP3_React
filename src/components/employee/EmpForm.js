@@ -31,8 +31,8 @@ class EmpForm extends React.Component {
                 phone: '',
                 email: '',
                 password: '',
-                supervisor: null,
-                dept: null,
+                supervisors: null,
+                departments: null,
             },
             errors: {
                 fname: '',
@@ -42,8 +42,8 @@ class EmpForm extends React.Component {
                 phone: '',
                 email: '',
                 password: '',
-                supervisor: '',
-                dept: '',
+                supervisors: '',
+                departments: '',
             },
             formMode: currentFormMode,
             redirect: false,
@@ -82,11 +82,23 @@ class EmpForm extends React.Component {
                     this.setState({
                         message: data.message
                     })
-                else
+                else {
+                    let placeholder = {
+                        fname: data.firstName,
+                        lname: data.lastName,
+                        employedFrom: data.dateFrom,
+                        dateTo: data.dateTo,
+                        phone: data.phoneNumber,
+                        email: data.email,
+                        password: data.password,
+                        supervisors: data.supervisedBy,
+                        departments: data.idDepartment
+                    }
                     this.setState({
-                        emp: data,
+                        emp: placeholder,
                         message: null
                     })
+                }
                 this.setState({isLoaded: true})
             },
             (error) => {
@@ -119,8 +131,8 @@ class EmpForm extends React.Component {
         if (fieldName === 'lname') {
             if (!checkRequired(fieldValue))
                 errorMessage = 'Field is required!'
-            else if (!checkTxtLengthRange(2, 40))
-                errorMessage = 'Field should contain 2-40 characters!'
+            // else if (!checkTxtLengthRange(2, 40))
+            //     errorMessage = 'Field should contain 2-40 characters!'
         }
         if (fieldName === 'email') {
             if (!checkRequired(fieldValue))
@@ -265,7 +277,7 @@ class EmpForm extends React.Component {
                     />
                     <FormInput
                         type="text"
-                        label="lastname"
+                        label="Lastname"
                         required
                         error={this.state.errors.lname}
                         name="lname"
@@ -275,7 +287,7 @@ class EmpForm extends React.Component {
                     />
                     <FormInput
                         type="date"
-                        label="employed since"
+                        label="Employed since"
                         required
                         error={this.state.errors.employedFrom}
                         name="employedFrom"
@@ -319,16 +331,16 @@ class EmpForm extends React.Component {
                         onChange={this.handleChange}
                         value={this.state.emp.password}
                     />
-                    <label htmlFor="supervisedBy">Supervisor: </label>
-                    <select name="supervisedBy" id="supervisedBy">
+                    <label htmlFor="supervisors">Supervisor: </label>
+                    <select name="supervisors" id="supervisors">
                         <option disabled selected value="">--Select supervisor--</option>
                         {employees.map(emp => (
                             <option value={emp.idEmployee}>{emp.firstName} {emp.lastName}</option>
                         ))}
                     </select>
-                    <label htmlFor="dept">Department: </label>
-                    <select name="dept" id="dept">
-                        <option disabled selected value="">--Select department--</option>
+                    <label htmlFor="departments">Department: </label>
+                    <select name="departments" id="departments">
+                        <option disabled value="">--Select department--</option>
                         {departments.map(dept => (
                             <option value={dept.idDepartment}>{dept.name}, {dept.location}</option>
                         ))}

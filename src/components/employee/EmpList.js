@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getEmpsApiCall} from "../../apiCalls/empApiCalls";
 import EmpListTable from "./EmpListTable";
-
+import {deleteEmpApiCall} from "../../apiCalls/empApiCalls";
 class EmpList extends React.Component {
 
     constructor(props) {
@@ -27,12 +27,15 @@ class EmpList extends React.Component {
             });
         });
     }
-
+    handleDelete =(id) => {
+        deleteEmpApiCall(id).then(res => this.fetchEmps());
+    }
     componentDidMount() {
         this.fetchEmps();
     }
 
     render() {
+
         const {error, isLoaded, employees} = this.state;
         let content;
         if (error)
@@ -40,7 +43,7 @@ class EmpList extends React.Component {
         else if (!isLoaded)
             content = <p>Loading...</p>
         else
-            content = <EmpListTable employees={employees}/>
+            content = <EmpListTable employees={employees} handler={id => this.handleDelete(id)}/>
         return (
             <main>
                 <h2>Employees</h2>

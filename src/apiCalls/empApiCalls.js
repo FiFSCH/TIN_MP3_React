@@ -5,6 +5,8 @@ const getEmpByIdApiCall = id => fetch(`${empsBaseUrl}/${id}`);
 
 const addEmployeeApiCall = emp => {
     const empString = JSON.stringify(emp);
+    console.log('emp',emp);
+    console.log('string',empString)
     const options = {
         method: "POST",
         headers: {
@@ -28,5 +30,6 @@ const updateEmpApiCall = (empId,emp) => {
     const promise = fetch(url, options);
     return promise;
 }
+const deleteEmpApiCall = empId => fetch(`${empsBaseUrl}/${empId}`,{method: 'DELETE'})
 
-export {getEmpsApiCall, getEmpByIdApiCall, addEmployeeApiCall, updateEmpApiCall};
+export {getEmpsApiCall, getEmpByIdApiCall, addEmployeeApiCall, updateEmpApiCall,deleteEmpApiCall};

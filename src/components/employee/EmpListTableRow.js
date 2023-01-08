@@ -1,7 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {deleteEmpApiCall} from "../../apiCalls/empApiCalls";
 
-const EmpListTableRow = ({empData, key}) => {
+const EmpListTableRow = ({empData, key,handler}) => {
     return (
         <tr key={key}>
             <td data-label="First Name">{empData.firstName}</td>
@@ -14,9 +15,9 @@ const EmpListTableRow = ({empData, key}) => {
                               className="list-actions-button-details">
                         Details</Link>
                     </li>
-                    <li><Link to={`/employees/delete/${empData.idEmployee}`} className="list-actions-button-delete"
-                              onClick="return window.confirm('Are you sure?')">
-                        Delete</Link>
+                    <li><button className="list-actions-button-delete"
+                              onClick={() =>handler(empData.idEmployee)}>
+                        Delete</button>
                     </li>
                 </ul>
             </td>

@@ -1,7 +1,7 @@
 import React from "react";
 import EmpListTableRow from "./EmpListTableRow";
 
-const EmpListTable = ({employees}) => {
+const EmpListTable = ({employees, handler}) => {
     if(employees.length === 0)
         return <p>There are no employees to display!</p>
     return (
@@ -16,7 +16,7 @@ const EmpListTable = ({employees}) => {
             </tr>
             </thead>
             <tbody>
-            {employees.map(emp => <EmpListTableRow empData={emp} key={emp.idEmployee}/> )}
+            {employees.map(emp => <EmpListTableRow empData={emp} key={emp.idEmployee} handler={handler}/> )}
             </tbody>
         </table>
     );

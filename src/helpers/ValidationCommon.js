@@ -21,10 +21,13 @@ function checkTxtLengthRange(value, min, max) {
     }
     value = value.toString().trim();
     const len = value.length;
-    if (max && len > max) {
+    if (len > max) {
         return false;
     }
-    return !(min && len < min);
+    if(len <min){
+        return false;
+    }
+    return true;
 }
 
 function checkEmail(value) {
