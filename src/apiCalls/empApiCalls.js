@@ -2,6 +2,7 @@ const empsBaseUrl = 'http://localhost:3000/api/employees';
 
 const getEmpsApiCall = () => fetch(empsBaseUrl);
 const getEmpByIdApiCall = id => fetch(`${empsBaseUrl}/${id}`);
+
 const addEmployeeApiCall = emp => {
     const empString = JSON.stringify(emp);
     const options = {
