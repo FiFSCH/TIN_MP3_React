@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {getEmpsApiCall} from "../../apiCalls/empApiCalls";
 import EmpListTable from "./EmpListTable";
 import {deleteEmpApiCall} from "../../apiCalls/empApiCalls";
+
 class EmpList extends React.Component {
 
     constructor(props) {
@@ -27,9 +28,11 @@ class EmpList extends React.Component {
             });
         });
     }
-    handleDelete =(id) => {
-        deleteEmpApiCall(id).then(() => this.fetchEmps());
+    handleDelete = (id) => {
+        if (window.confirm('Are you sure?'))
+            deleteEmpApiCall(id).then(() => this.fetchEmps());
     }
+
     componentDidMount() {
         this.fetchEmps();
     }
