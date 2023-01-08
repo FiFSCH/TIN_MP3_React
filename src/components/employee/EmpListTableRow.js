@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {deleteEmpApiCall} from "../../apiCalls/empApiCalls";
+
 
 const EmpListTableRow = ({empData, key,handler}) => {
     return (

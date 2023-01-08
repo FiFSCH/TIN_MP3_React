@@ -28,7 +28,7 @@ class EmpList extends React.Component {
         });
     }
     handleDelete =(id) => {
-        deleteEmpApiCall(id).then(res => this.fetchEmps());
+        deleteEmpApiCall(id).then(() => this.fetchEmps());
     }
     componentDidMount() {
         this.fetchEmps();

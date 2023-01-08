@@ -209,6 +209,7 @@ class EmpForm extends React.Component {
                 promise = addEmployeeApiCall(emp)
             } else if (currentFormMode === formMode.EDIT) {
                 const empId = this.state.empId
+                console.log(emp);
                 promise = updateEmpApiCall(empId, emp)
             }
             if (promise) {
@@ -332,15 +333,15 @@ class EmpForm extends React.Component {
                         value={this.state.emp.password}
                     />
                     <label htmlFor="supervisors">Supervisor: </label>
-                    <select name="supervisors" id="supervisors">
+                    <select name="supervisors" id="supervisors" onChange={this.handleChange}>
                         <option disabled selected value="">--Select supervisor--</option>
                         {employees.map(emp => (
                             <option value={emp.idEmployee}>{emp.firstName} {emp.lastName}</option>
                         ))}
                     </select>
                     <label htmlFor="departments">Department: </label>
-                    <select name="departments" id="departments">
-                        <option disabled value="">--Select department--</option>
+                    <select name="departments" id="departments" onChange={this.handleChange}>
+                        <option disabled selected value="">--Select department--</option>
                         {departments.map(dept => (
                             <option value={dept.idDepartment}>{dept.name}, {dept.location}</option>
                         ))}
