@@ -1,6 +1,6 @@
-import {deptList, deptDetailsList} from "./deptApiMockData";
+const deptsBaseUrl = 'http://localhost:3000/api/departments';
 
-const getDeptsApiCall = () => deptList;
-const getDeptByIdApiCall = id => deptDetailsList.find(dept => dept.id === id);
+const getDeptsApiCall = () => fetch(deptsBaseUrl);
+const getDeptByIdApiCall = id => fetch(`${deptsBaseUrl}/${id}`);
 
 export {getDeptsApiCall, getDeptByIdApiCall};

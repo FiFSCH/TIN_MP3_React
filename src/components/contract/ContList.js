@@ -1,41 +1,55 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {getContsApiCall} from "../../apiCalls/contApiCalls";
-import {getFormattedDate} from "../../helpers/dateHelper";
+import ContListTable from "./ContListTable";
 
-const ContList = () => {
-    const contList = getContsApiCall();
-    return (
-        <main>
-            <h2>Contracts</h2>
-            <table id="ContractsList" className="table-list">
-                <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Start date</th>
-                    <th>Due date</th>
-                    <th>Options</th>
-                </tr>
-                </thead>
-                <tbody>
-                {contList.map(cont => (
-                    <tr>
-                        <td data-label="Description">{cont.desc}</td>
-                        <td data-label="Start date">{cont.start ? getFormattedDate(cont.start) : ''}</td>
-                        <td data-label="Due date">{cont.end ? getFormattedDate(cont.end) : '------'}</td>
-                        <td>
-                            <ul className="list-actions">
-                                <li><Link to={`/contracts/details/${cont.id}`}
-                                          className="list-actions-button-details">Details</Link></li>
-                                <li><Link to={`/contracts/delete/${cont.id}`} className="list-actions-button-delete"
-                                          onClick="return confirm('Are you sure?')">Delete</Link></li>
-                            </ul>
-                        </td>
-                    </tr>))}
-                </tbody>
-            </table>
-            <p><Link to="/contracts/add" className="button-add"> Add new contract </Link></p>
-        </main>
-    );
+class ContList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            contracts: []
+        }
+    }
+
+    fetchConts = () => {
+        getContsApiCall().then(res => res.json()).then((data) => {
+                this.setState({
+                    isLoaded: true,
+                    contracts: data
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+    }
+
+    componentDidMount() {
+        this.fetchConts();
+    }
+
+    render() {
+        const {error, isLoaded, contracts} = this.state;
+        let content;
+        if (error)
+            content = <p>Error: {error.message}</p>
+        else if (!isLoaded)
+            content = <p>Loading...</p>
+        else
+            content = <ContListTable conts={contracts}/>
+        return (
+            <main>
+                <h2>Contracts</h2>
+                {content}
+                <p><Link to="/contracts/add" className="button-add"> Add new contract </Link></p>
+            </main>
+        );
+    }
 }
+
 export default ContList;

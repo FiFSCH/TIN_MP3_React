@@ -1,5 +1,5 @@
-import {contList, contDetailsList} from "./contApiMockData";
+const contsBaseUrl = 'http://localhost:3000/api/contracts'
 
-const getContsApiCall = () => contList;
-const getContByIdApiCall = id => contDetailsList.find(cont => cont.id === id);
+const getContsApiCall = () => fetch(contsBaseUrl);
+const getContByIdApiCall = id => fetch(`${contsBaseUrl}/${id}`)
 export {getContByIdApiCall, getContsApiCall}

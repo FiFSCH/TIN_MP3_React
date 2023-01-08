@@ -1,52 +1,61 @@
 import React from "react";
-import {useParams} from "react-router-dom";
+import withRouter from "../../helpers/withRouter";
 import {getContByIdApiCall} from "../../apiCalls/contApiCalls";
-import {getFormattedDate} from "../../helpers/dateHelper";
-import {Link} from "react-router-dom";
+import ContDetailsData from "./ContDetailsData";
 
-const ContDetails = () => {
-    let {contId} = useParams();
-    contId = parseInt(contId);
-    const cont = getContByIdApiCall(contId);
-    return (
-        <main>
-            <h2>Contract Details</h2>
-            <form className="form">
-                <label htmlFor="desc">Description: </label>
-                <input type="text" id="desc" name="desc" value={cont.desc} disabled/>
-                <label htmlFor="startDate">Start date: </label>
-                <input type="date" id="startDate" name="startDate"
-                       value={cont.start ? getFormattedDate(cont.start) : ''} disabled/>
-                <label htmlFor="dueDate">Due date: </label>
-                <input type="date" id="dueDate" name="dueDate"
-                       value={cont.end ? getFormattedDate(cont.end) : '------'} disabled/>
-                <div className="form-buttons">
-                    <Link to={`/contracts/edit/${cont.id}`} className="list-actions-button-edit">
-                        Edit
-                    </Link>
-                    <Link to="/contracts" className="button-cancel">
-                        Cancel
-                    </Link>
-                </div>
-            </form>
-            <h3>Departments< /h3>
-            <table id="responsibleDepartment" className="table-list-resDept">
-                <thead>
-                <tr>
-                    <th>Responsible Department</th>
-                    <th>Location</th>
-                </tr>
-                </thead>
-                <tbody>
-                {cont.dept.map(dept => (
-                    <tr>
-                        <td data-label="Department"><Link
-                            to={`/departments/details/${!dept.id ? '' : dept.id}`}>{dept.name}</Link></td>
-                        <td data-label="Location">{dept.loc}</td>
-                    </tr>))}
-                </tbody>
-            </table>
-        </main>
-    );
+class ContDetails extends React.Component {
+    constructor(props) {
+        super(props);
+        let {contId} = this.props.params;
+        this.state = {
+            contId: contId,
+            cont: null,
+            error: null,
+            isLoaded: false,
+            message: null
+        }
+    }
+
+    fetchContDetails = () => {
+        getContByIdApiCall(this.state.contId).then(res => res.json()).then((data) => {
+            if (data.message)
+                this.setState({
+                    cont: null,
+                    message: data.message
+                })
+            else
+                this.setState({
+                    cont: data,
+                    message: null
+                })
+            this.setState({isLoaded: true})
+        }, (error) => {
+            this.setState({isLoaded: true, error})
+        })
+    }
+
+    componentDidMount() {
+        this.fetchContDetails();
+    }
+
+    render() {
+        const {cont, error, isLoaded, message} = this.state;
+        let content;
+        if (error)
+            content = <p>Error: {error.message}</p>
+        else if (!isLoaded)
+            content = <p>Loading...</p>
+        else if (message)
+            content = <p> {message}</p>
+        else
+            content = <ContDetailsData contData={cont}/>
+        return (
+            <main>
+                <h2>Contract Details</h2>
+                {content}
+            </main>
+        );
+    }
 }
-export default ContDetails;
+
+export default withRouter(ContDetails);

@@ -1,37 +1,55 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
+import DeptListTable from "./DeptListTable";
 
-const DeptList = () => {
-    const deptList = getDeptsApiCall();
-    return (
-        <main>
-            <h2>Departments</h2>
-            <table id="DeptsList" className="table-list">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Options</th>
-                </tr>
-                </thead>
-                <tbody>
-                {deptList.map(dept => (<tr key={dept.id}>
-                    <td data-label="Name">{dept.name}</td>
-                    <td data-label="Location">{dept.loc}</td>
-                    <td>
-                        <ul className="list-actions">
-                            <li><Link to={`/departments/details/${dept.id}`}
-                                      className="list-actions-button-details">Details</Link></li>
-                            <li><Link to={`/departments/delete/${dept.id}`} className="list-actions-button-delete"
-                                      onClick="return confirm('Are you sure?')">Delete</Link></li>
-                        </ul>
-                    </td>
-                </tr>))}
-                </tbody>
-            </table>
-            <p><Link to="/departments/add" className="button-add">Add new department</Link></p>
-        </main>
-    );
+class DeptList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            departments: []
+        }
+    }
+
+    fetchDepts = () => {
+        getDeptsApiCall().then(res => res.json()).then((data) => {
+                this.setState({
+                    isLoaded: true,
+                    departments: data
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+    }
+
+    componentDidMount() {
+        this.fetchDepts();
+    }
+
+    render() {
+        const {error, isLoaded, departments} = this.state;
+        let content;
+        if (error)
+            content = <p>Error: {error.message}</p>
+        else if (!isLoaded)
+            content = <p>Loading...</p>
+        else
+            content = <DeptListTable depts={departments}/>
+        return (
+            <main>
+                <h2>Departments</h2>
+                {content}
+                <p><Link to="/departments/add" className="button-add">Add new department</Link></p>
+            </main>
+        );
+    }
 }
+
 export default DeptList;

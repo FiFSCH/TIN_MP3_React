@@ -1,6 +1,31 @@
-import {empList, empDetailsList} from "./empApiMockData";
+const empsBaseUrl = 'http://localhost:3000/api/employees';
 
-const getEmpsApiCall = () => empList;
-const getEmpByIdApiCall = id => empDetailsList.find(emp => emp.id === id);
+const getEmpsApiCall = () => fetch(empsBaseUrl);
+const getEmpByIdApiCall = id => fetch(`${empsBaseUrl}/${id}`);
+const addEmployeeApiCall = emp => {
+    const empString = JSON.stringify(emp);
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: empString
+    }
+    const promise = fetch(empsBaseUrl, options);
+    return promise;
+}
+const updateEmpApiCall = (empId,emp) => {
+    const url = `${empsBaseUrl}/${empId}`;
+    const empString = JSON.stringify(emp);
+    const options = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: empString
+    }
+    const promise = fetch(url, options);
+    return promise;
+}
 
-export {getEmpsApiCall, getEmpByIdApiCall};
+export {getEmpsApiCall, getEmpByIdApiCall, addEmployeeApiCall, updateEmpApiCall};
