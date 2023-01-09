@@ -1,7 +1,30 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import withRouter from "../../helpers/withRouter";
+import formMode from "../../helpers/formHelper";
 
 class DeptForm extends React.Component {
+    constructor(props) {
+        super(props);
+        const paramsDeptId = this.props.params.deptId;
+        const currentFormMode = paramsDeptId ? formMode.EDIT : formMode.NEW;
+        this.state= {
+            deptId: paramsDeptId,
+            dept:{
+                name: '',
+                location: ''
+            },errors:{
+                name: '',
+                location: ''
+            },
+            formMode: currentFormMode,
+            redirect: false,
+            error: null
+        }
+    }
+    fetchDeptDetails = () => {
+
+    }
     render() {
         return (
             <main>
@@ -25,4 +48,4 @@ class DeptForm extends React.Component {
     }
 }
 
-export default DeptForm;
+export default withRouter(DeptForm);
