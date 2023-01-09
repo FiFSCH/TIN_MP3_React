@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
 import DeptListTable from "./DeptListTable";
+import {deleteDeptApiCall} from "../../apiCalls/deptApiCalls";
 
 class DeptList extends React.Component {
     constructor(props) {
@@ -29,6 +30,10 @@ class DeptList extends React.Component {
         )
     }
 
+    handleDelete = (id) => {
+        if (window.confirm('Are you sure?'))
+            deleteDeptApiCall(id).then(() => this.fetchDepts());
+    }
     componentDidMount() {
         this.fetchDepts();
     }
@@ -41,7 +46,7 @@ class DeptList extends React.Component {
         else if (!isLoaded)
             content = <p>Loading...</p>
         else
-            content = <DeptListTable depts={departments}/>
+            content = <DeptListTable depts={departments} handler={id => this.handleDelete(id)}/>
         return (
             <main>
                 <h2>Departments</h2>

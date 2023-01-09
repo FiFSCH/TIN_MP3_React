@@ -2,6 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 const DeptContsTable = ({contracts}) => {
+    if (contracts.length === 0)
+        return (<></>);
     return (
         <>
             <h3>Contracts< /h3>
@@ -23,5 +25,5 @@ const DeptContsTable = ({contracts}) => {
                 </tbody>
             </table>
         </>);
-}
+};
 export default DeptContsTable;

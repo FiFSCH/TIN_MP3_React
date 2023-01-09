@@ -5,8 +5,6 @@ const getEmpByIdApiCall = id => fetch(`${empsBaseUrl}/${id}`);
 
 const addEmployeeApiCall = emp => {
     const empString = JSON.stringify(emp);
-    console.log('emp',emp);
-    console.log('string',empString)
     const options = {
         method: "POST",
         headers: {

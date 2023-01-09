@@ -7,10 +7,10 @@ const DeptDetailsData = ({deptData}) => {
         <>
             <form className="form">
                 <label htmlFor="name">Name: </label>
-                <input type="text" id="name" name="name" placeholder="" value={deptData.name}/>
+                <input type="text" id="name" name="name" placeholder="" value={deptData.name} disabled/>
                 <label htmlFor="location">Location: </label>
                 <input type="text" id="location" name="location" placeholder=""
-                       value={deptData.location}/>
+                       value={deptData.location} disabled/>
                 <div className="form-buttons">
                     <Link to={`/departments/edit/${deptData.idDepartment}`} className="list-actions-button-edit">
                         Edit

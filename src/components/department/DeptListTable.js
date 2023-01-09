@@ -2,7 +2,7 @@ import React from "react";
 import DeptListTableRow from "./DeptListTableRow";
 
 
-const DeptListTable = ({depts}) => {
+const DeptListTable = ({depts, handler}) => {
     if (depts.length === 0)
         return <p>There are no departments to display!</p>
     return (
@@ -15,7 +15,7 @@ const DeptListTable = ({depts}) => {
             </tr>
             </thead>
             <tbody>
-            {depts.map(dept => <DeptListTableRow key={dept.idDepartment} deptData={dept}/>)}
+            {depts.map(dept => <DeptListTableRow key={dept.idDepartment} deptData={dept} handler={handler}/>)}
             </tbody>
         </table>
     );
