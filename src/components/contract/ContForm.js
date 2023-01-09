@@ -1,8 +1,91 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
+import { getDeptsApiCall} from "../../apiCalls/deptApiCalls";
+import formMode from "../../helpers/formHelper";
+import withRouter from "../../helpers/withRouter";
+import {getContByIdApiCall} from "../../apiCalls/contApiCalls";
 
 class ContForm extends React.Component {
+    constructor(props) {
+        super(props);
+        const paramsContId = this.props.params.contId;
+        const currentFormMode = paramsContId ? formMode.EDIT : formMode.NEW;
+        this.state = {
+            departments: [],
+            contId: paramsContId,
+            cont: {
+                desc: '',
+                startDate: null,
+                dueDate: null,
+                deptContName: null
+            },
+            errors: {
+                desc: '',
+                startDate: '',
+                dueDate: '',
+                deptContName: ''
+            },
+            formMode: currentFormMode,
+            redirect: false,
+            error: null
+        };
+    }
+    fetchDepts = () => {
+        getDeptsApiCall().then(res => res.json()).then((data) => {
+                this.setState({
+                    departments: data
+                });
+            },
+            (error) => {
+                this.setState({
+                    error
+                });
+            }
+        );
+    };
+    fetchContDetails = () => {
+        getContByIdApiCall(this.state.contId).then(res => res.json()).then(
+            (data) => {
+                if (data.message)
+                    this.setState({
+                        message: data.message
+                    });
+                else {
+                    this.setState({
+                        cont: data,
+                        message: null
+                    });
+                }
+                this.setState({isLoaded: true});
+            },
+            (error) => {
+                this.setState({
+                        isLoaded: true,
+                        error
+                    }
+                );
+            }
+        );
+    };
+    componentDidMount() {
+        this.fetchDepts();
+        const currentFormMode = this.state.formMode;
+        if (currentFormMode === formMode.EDIT)
+            this.fetchContDetails();
+    }
+    handleChange = (event) => {
+        const {name, value} = event.target;
+        const cont = {...this.state.cont};
+        cont[name] = value;
+        const errorMessage = this.validateField(name, value);
+        const errors = {...this.state.errors};
+        errors[name] = errorMessage;
+        this.setState({
+            cont: cont,
+            errors: errors
+        });
+    };
+
     render() {
         const depts = getDeptsApiCall();
         return (
@@ -34,4 +117,4 @@ class ContForm extends React.Component {
     }
 }
 
-export default ContForm;
+export default withRouter(ContForm);
