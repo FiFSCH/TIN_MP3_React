@@ -2,6 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getContsApiCall} from "../../apiCalls/contApiCalls";
 import ContListTable from "./ContListTable";
+import {deleteContApiCall} from "../../apiCalls/contApiCalls";
+
 
 class ContList extends React.Component {
     constructor(props) {
@@ -11,6 +13,10 @@ class ContList extends React.Component {
             isLoaded: false,
             contracts: []
         }
+    }
+    handleDelete = (id) => {
+        if (window.confirm('Are you sure?'))
+            deleteContApiCall(id).then(() => this.fetchConts());
     }
 
     fetchConts = () => {
@@ -41,7 +47,7 @@ class ContList extends React.Component {
         else if (!isLoaded)
             content = <p>Loading...</p>
         else
-            content = <ContListTable conts={contracts}/>
+            content = <ContListTable conts={contracts} handler={id => this.handleDelete(id)}/>
         return (
             <main>
                 <h2>Contracts</h2>

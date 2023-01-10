@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 const ContsDeptTable = ({departments}) => {
+    if (departments.length === 0)
+        return (<></>);
     return(<>
         <h3>Departments< /h3>
         <table id="responsibleDepartment" className="table-list-resDept">

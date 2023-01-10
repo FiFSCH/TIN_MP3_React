@@ -13,6 +13,9 @@ import {
     checkPhone,
     checkEmail
 } from "../../helpers/ValidationCommon";
+import FormSelectDept from "../form/FormSelectDept";
+import FormSelectEmp from "../form/FormSelectEmp";
+import {getFormattedDate} from "../../helpers/dateHelper";
 
 class EmpForm extends React.Component {
     constructor(props) {
@@ -86,8 +89,8 @@ class EmpForm extends React.Component {
                     let placeholder = {
                         fname: data.firstName,
                         lname: data.lastName,
-                        employedFrom: data.dateFrom,
-                        dateTo: data.dateTo,
+                        employedFrom: data.dateFrom ? getFormattedDate(data.dateFrom) : "",
+                        dateTo: data.dateTo ? getFormattedDate(data.dateTo) : "",
                         phone: data.phoneNumber,
                         email: data.email,
                         password: data.password,
@@ -131,13 +134,13 @@ class EmpForm extends React.Component {
         if (fieldName === 'lname') {
             if (!checkRequired(fieldValue))
                 errorMessage = 'Field is required!';
-            else if (!checkTxtLengthRange(fieldValue,2, 40))
+            else if (!checkTxtLengthRange(fieldValue, 2, 40))
                 errorMessage = 'Field should contain 2-40 characters!'
         }
         if (fieldName === 'email') {
             if (!checkRequired(fieldValue))
                 errorMessage = 'Field is required!';
-                else if (!checkTxtLengthRange(fieldValue,5, 60))
+            else if (!checkTxtLengthRange(fieldValue, 5, 60))
                 errorMessage = 'Field should contain 2-40 characters!'
             else if (!checkEmail(fieldValue))
                 errorMessage = 'Provide correct email!';
@@ -153,6 +156,16 @@ class EmpForm extends React.Component {
                 errorMessage = 'Field is required!';
             else if (!checkDate(fieldValue))
                 errorMessage = 'Date cannot be grater than today\'s date!'
+        }
+        if (fieldName === 'password') {
+            if (!checkRequired(fieldValue))
+                errorMessage = 'Field is required!';
+            else if (!checkTxtLengthRange(fieldValue, 2, 300))
+                errorMessage = 'Field should contain 2-300 characters!';
+        }
+        if (fieldName === 'departments') {
+            if (!checkRequired(fieldValue))
+                errorMessage = 'Field is required!';
         }
         return errorMessage;
     };
@@ -252,7 +265,7 @@ class EmpForm extends React.Component {
                 <Navigate to={'/employees'}/>
             );
         }
-        const errorsSummary = this.hasErrors() ? 'Therre are errors!' : '';
+        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
         const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         const employees = this.state.employees;
@@ -322,25 +335,28 @@ class EmpForm extends React.Component {
                     <FormInput
                         type="password"
                         label="Password"
+                        required
                         error={this.state.errors.password}
                         name="password"
                         onChange={this.handleChange}
                         value={this.state.emp.password}
                     />
-                    <label htmlFor="supervisors">Supervisor: </label>
-                    <select name="supervisors" id="supervisors" onChange={this.handleChange}>
-                        <option disabled selected value="">--Select supervisor--</option>
-                        {employees.map(emp => (
-                            <option value={emp.idEmployee}>{emp.firstName} {emp.lastName}</option>
-                        ))}
-                    </select>
-                    <label htmlFor="departments">Department: </label>
-                    <select name="departments" id="departments" onChange={this.handleChange}>
-                        <option disabled selected value="">--Select department--</option>
-                        {departments.map(dept => (
-                            <option value={dept.idDepartment}>{dept.name}, {dept.location}</option>
-                        ))}
-                    </select>
+                    <FormSelectEmp
+                        error={this.state.errors.supervisors}
+                        name="supervisors"
+                        collection={employees}
+                        placeholder="Select supervisor"
+                        onChange={this.handleChange}
+                        label="Supervisor"
+                    />
+                    <FormSelectDept
+                        error={this.state.errors.departments}
+                        name="departments"
+                        collection={departments}
+                        placeholder="Select department"
+                        onChange={this.handleChange}
+                        label="Department"
+                        required/>
                     <FormButtons
                         mode={this.state.formMode}
                         error={globalErrorMessage}
@@ -353,52 +369,3 @@ class EmpForm extends React.Component {
 }
 
 export default withRouter(EmpForm);
-// return (
-//     <main>
-//         <h2>Employee</h2>
-//         <form className="form">
-//             <label htmlFor="fname">First name: <abbr title="required" aria-label="required">*</abbr></label>
-//             <input type="text" id="fname" name="fname" value=""/>
-//             <span id="errorFname" className="errors-text"></span>
-//             <label htmlFor="lname">Lastname: <abbr title="required" aria-label="required">*</abbr></label>
-//             <input type="text" id="lname" name="lname" value=""/>
-//             <span id="errorLname" className="errors-text"></span>
-//             <label htmlFor="employedFrom">Employed since: <abbr title="required"
-//                                                                 aria-label="required">*</abbr></label>
-//             <input type="date" id="employedFrom" name="employedFrom" value=""/>
-//             <span id="errorEmployedSince" className="errors-text"></span>
-//             <label htmlFor="employedTo">Employment termination: </label>
-//             <input type="date" id="employedTo" name="employedTo" value=""/>
-//             <span id="errorEmployedTo" className="errors-text"></span>
-//             <label htmlFor="phone">Phone number: <abbr title="required"
-//                                                        aria-label="required">*</abbr></label>
-//             <input type="text" id="phone" name="phone" value=""/>
-//             <span id="errorPhoneNumber" className="errors-text"></span>
-//             <label htmlFor="email">Email address: <abbr title="required"
-//                                                         aria-label="required">*</abbr></label>
-//             <input type="email" id="email" name="email" value=""/>
-//             <span id="errorEmail" className="errors-text"></span>
-//             <label htmlFor="supervisor">Supervisor: </label>
-//             <select name="supervisor" id="supervisor">
-//                 <option selected value="">--Select supervisor--</option>
-//                 {/*{emps.map(emp => (*/}
-//                 {/*    <option value={emp.id}>{emp.firstName} {emp.lastname}</option>*/}
-//                 {/*))}*/}
-//             </select>
-//             <label htmlFor="dept">Department: </label>
-//             <select name="dept" id="dept">
-//                 <option disabled selected value="">--Select department--</option>
-//                 {/*{depts.map(dept => (*/}
-//                 {/*    <option value={dept.id}>{dept.name}, {dept.loc}</option>*/}
-//                 {/*))}*/}
-//             </select>
-//             <span id="errorDept" className="errors-text"></span>
-//             <div className="form-buttons">
-//                 <input type="submit" value="Save" className="button-submit"/>
-//                 <Link to="/employees" className="button-cancel">
-//                     Cancel
-//                 </Link>
-//             </div>
-//         </form>
-//     </main>
-// )

@@ -171,7 +171,7 @@ class DeptForm extends React.Component {
                 <Navigate to={'/departments'}/>
             );
         }
-        const errorsSummary = this.hasErrors() ? 'Therre are errors!' : '';
+        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
         const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         const pageTitle = this.state.formMode === formMode.NEW ? 'New department' : 'Edit department';

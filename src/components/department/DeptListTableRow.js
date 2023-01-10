@@ -9,7 +9,7 @@ const DeptListTableRow = ({key, deptData, handler}) => {
             <ul className="list-actions">
                 <li><Link to={`/departments/details/${deptData.idDepartment}`}
                           className="list-actions-button-details">Details</Link></li>
-                <li><button to={`/departments/delete/${deptData.idDepartment}`} className="list-actions-button-delete"
+                <li><button className="list-actions-button-delete"
                             onClick={() =>handler(deptData.idDepartment)}>Delete</button></li>
             </ul>
         </td>

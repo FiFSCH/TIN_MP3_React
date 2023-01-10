@@ -1,9 +1,15 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import { getDeptsApiCall} from "../../apiCalls/deptApiCalls";
+import {Navigate} from "react-router-dom";
+import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
 import formMode from "../../helpers/formHelper";
 import withRouter from "../../helpers/withRouter";
 import {getContByIdApiCall} from "../../apiCalls/contApiCalls";
+import {checkRequired, checkTxtLengthRange} from "../../helpers/ValidationCommon";
+import {addContApiCall, updateContApiCall} from "../../apiCalls/contApiCalls";
+import FormInput from "../form/FormInput";
+import FormSelectDept from "../form/FormSelectDept";
+import FormButtons from "../form/FormButtons";
+import {getFormattedDate} from "../../helpers/dateHelper";
 
 class ContForm extends React.Component {
     constructor(props) {
@@ -14,16 +20,18 @@ class ContForm extends React.Component {
             departments: [],
             contId: paramsContId,
             cont: {
+                IdCont: '',
                 desc: '',
                 startDate: null,
                 dueDate: null,
-                deptContName: null
+                IdDept: null
             },
             errors: {
+                IdCont: '',
                 desc: '',
                 startDate: '',
                 dueDate: '',
-                deptContName: ''
+                IdDept: ''
             },
             formMode: currentFormMode,
             redirect: false,
@@ -51,8 +59,16 @@ class ContForm extends React.Component {
                         message: data.message
                     });
                 else {
+                    let placeholder = {
+                        IdCont: data.idContract,
+                        desc: data.description,
+                        startDate: data.startDate ? getFormattedDate(data.startDate) : "",
+                        dueDate: data.dueDate ? getFormattedDate(data.dueDate) : "",
+                        IdDept: data.departments[0] ? data.departments[0].idDepartment : ""
+                    };
+                    console.log(data)
                     this.setState({
-                        cont: data,
+                        cont: placeholder,
                         message: null
                     });
                 }
@@ -85,32 +101,153 @@ class ContForm extends React.Component {
             errors: errors
         });
     };
+    validateField = (fieldName, fieldValue) => {
+        let errorMessage = '';
+        if (fieldName === 'desc') {
+            if (!checkRequired(fieldValue))
+                errorMessage = 'Field is required!';
+            else if (!checkTxtLengthRange(fieldValue, 13, 350))
+                errorMessage = 'Field should contain 15-350 characters!';
+        }
+        if (fieldName === 'startDate') {
+            if (!checkRequired(fieldValue))
+                errorMessage = 'Field is required!';
+        }
+        if (fieldName === 'IdDept') {
+            if (!checkRequired(fieldValue))
+                errorMessage = 'Field is required!';
+        }
+        return errorMessage;
+    };
+    validateForm = () => {
+        const cont = this.state.cont;
+        const errors = this.state.errors;
+        for (const fieldName in cont) {
+            const fieldValue = cont[fieldName];
+            const errorMessage = this.validateField(fieldName, fieldValue);
+            errors[fieldName] = errorMessage;
+        }
+        this.setState({errors: errors});
+        return !this.hasErrors();
+    };
+    hasErrors = () => {
+        const errors = this.state.errors;
+        for (const errorField in this.state.errors) {
+            if (errors[errorField].length > 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const isValid = this.validateForm();
+        if (isValid) {
+            const
+                cont = this.state.cont,
+                currentFormMode = this.state.formMode;
+            let
+                promise,
+                response;
+            if (currentFormMode === formMode.NEW) {
+                promise = addContApiCall(cont);
+            } else if (currentFormMode === formMode.EDIT) {
+                const contId = this.state.contId;
+                promise = updateContApiCall(contId, cont);
+            }
+            if (promise) {
+                promise
+                    .then(
+                        (data) => {
+                            response = data;
+                            if (response.status === 201 || response.status === 500) {
+                                return data.json();
+                            }
+                        })
+                    .then(
+                        (data) => {
+                            if (!response.ok && response.status === 500) {
+                                console.log(data);
+                                for (const i in data) {
+                                    const errorItem = data[i];
+                                    const errorMessage = errorItem.message;
+                                    const fieldName = errorItem.path;
+                                    const errors = {...this.state.errors};
+                                    errors[fieldName] = errorMessage;
+                                    this.setState({
+                                        errors: errors,
+                                        error: null
+                                    });
+                                }
+                            } else {
+                                this.setState({redirect: true});
+                            }
+                        },
+                        (error) => {
+                            this.setState({redirect: true});
+                        }
+                    );
+            }
+        }
+    };
 
     render() {
-        const depts = getDeptsApiCall();
+        const {redirect} = this.state;
+        if (redirect) {
+            return (
+                <Navigate to={'/contracts'}/>
+            );
+        }
+        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
+        const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
+        const globalErrorMessage = errorsSummary || fetchError || this.state.message;
+        const departments = this.state.departments;
+        const pageTitle = this.state.formMode === formMode.NEW ? 'New contract' : 'Edit contract';
         return (
             <main>
-                <h2>Contract</h2>
-                <form className="form">
-                    <label htmlFor="desc">Description: <abbr title="required" aria-label="required">*</abbr></label>
-                    <input type="text" id="desc" name="desc" value=""/>
-                    <span id="errorDescription" className="errors-text"></span>
-                    <label htmlFor="startDate">Start date: <abbr title="required" aria-label="required">*</abbr></label>
-                    <input type="date" id="startDate" name="startDate"/>
-                    <span id="errorStartDate" className="errors-text"></span>
-                    <label htmlFor="dueDate">Due date: </label>
-                    <input type="date" id="dueDate" name="dueDate" value=""/>
-                    <span id="errorDueDate" className="errors-text"></span>
-                    <label htmlFor="deptContName">Responsible department: <abbr title="required" aria-label="required">*</abbr></label>
-                    <select name="IdDept" id="deptContName" required>
-                        <option disabled selected value="">--Select Department--</option>
-                        {depts.map(dept => <option value={dept.id}>{dept.name}, {dept.loc}</option>)}
-                    </select>
-                    <span id="errorDeptContName" className="errors-text"></span>
-                    <div className="form-buttons">
-                        <input type="submit" value="Save" className="button-submit"/>
-                        <Link to="/contracts" class="button-cancel">Cancel</Link>
-                    </div>
+                <h2>{pageTitle}</h2>
+                <form className="form" onSubmit={this.handleSubmit}>
+                    <label htmlFor="IdCont"></label>
+                    <input type="hidden" name="IdCont" value=""/>
+                    <FormInput
+                        type="text"
+                        label="Description"
+                        required
+                        error={this.state.errors.desc}
+                        name="desc"
+                        placeholder="15-350 characters"
+                        onChange={this.handleChange}
+                        value={this.state.cont.desc}/>
+                    <FormInput
+                        type="date"
+                        label="Start date"
+                        required
+                        error={this.state.errors.startDate}
+                        name="startDate"
+                        placeholder=""
+                        onChange={this.handleChange}
+                        value={this.state.cont.startDate}/>
+                    <FormInput
+                        type="date"
+                        label="Due date"
+                        error={this.state.errors.dueDate}
+                        name="dueDate"
+                        placeholder=""
+                        onChange={this.handleChange}
+                        value={this.state.cont.dueDate}/>
+                    <FormSelectDept
+                        error={this.state.errors.IdDept}
+                        name="IdDept"
+                        collection={departments}
+                        placeholder="Select department"
+                        onChange={this.handleChange}
+                        label="Department"
+                        required/>
+                    <FormButtons
+                        mode={this.state.formMode}
+                        error={globalErrorMessage}
+                        cancelPath="/contracts"
+                    />
                 </form>
             </main>
         );
