@@ -6,6 +6,7 @@ import {getDeptByIdApiCall, addDeptApiCall, updateDeptApiCall} from "../../apiCa
 import {checkRequired, checkTxtLengthRange} from "../../helpers/ValidationCommon";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
+import {withTranslation} from "react-i18next";
 
 class DeptForm extends React.Component {
     constructor(props) {
@@ -175,30 +176,28 @@ class DeptForm extends React.Component {
         if (internalError) {
             return (<Navigate to='/internalError'/>);
         }
-        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
-        const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
+        const errorsSummary = this.hasErrors() ? this.props.t('errors') : '';
+        const fetchError = this.state.error ? `${this.props.t('error')}: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
-        const pageTitle = this.state.formMode === formMode.NEW ? 'New department' : 'Edit department';
+        const pageTitle = this.state.formMode === formMode.NEW ? this.props.t('dept.form.add.pageTitle') : this.props.t('dept.form.edit.pageTitle');
         return (
             <main>
                 <h2>{pageTitle}</h2>
                 <form className="form" onSubmit={this.handleSubmit}>
                     <FormInput
                         type="text"
-                        label="Name"
+                        label={this.props.t('dept.fields.name')}
                         required
                         error={this.state.errors.name}
                         name="name"
-                        placeholder="2-60 characters"
                         onChange={this.handleChange}
                         value={this.state.dept.name}/>
                     <FormInput
                         type="text"
-                        label="Location"
+                        label={this.props.t('dept.fields.loc')}
                         required
                         error={this.state.errors.location}
                         name="location"
-                        placeholder="2-60 characters"
                         onChange={this.handleChange}
                         value={this.state.dept.location}/>
                     <FormButtons
@@ -212,4 +211,4 @@ class DeptForm extends React.Component {
     }
 }
 
-export default withRouter(DeptForm);
+export default withTranslation()(withRouter(DeptForm));

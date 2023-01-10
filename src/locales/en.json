@@ -1,0 +1,146 @@
+{
+  "main-page": {
+    "content": "Content"
+  },
+  "confirm": "Are you sure?",
+  "error": "Error: ",
+  "loading": "Loading...",
+  "errors": "There are errors!",
+  "nav": {
+    "main-page": "Main page",
+    "employees": "Employees",
+    "contracts": "Contracts",
+    "departments": "Departments"
+  },
+  "list": {
+    "options": {
+      "title": "Options",
+      "details": "Details",
+      "delete": "Delete"
+    }
+  },
+  "form": {
+    "options": {
+      "return": "Go back",
+      "edit": "Edit",
+      "add": "Add",
+      "cancel": "Cancel"
+    }
+  },
+  "login": {
+    "loggedAs": "Logged as:",
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password"
+  },
+  "emp": {
+    "fields": {
+      "firstName": "First name",
+      "lastname": "Lastname",
+      "employed-since": "Employed since ",
+      "employment-termination": "Employment termination",
+      "phone-number": "Phone number",
+      "email": "Email",
+      "password": "Password",
+      "supervisor": "Supervisor",
+      "department": "Department",
+      "supervisors": "Supervisors"
+    },
+    "list": {
+      "empty": "There are no employees to display!",
+      "title": "Employees",
+      "addNew": "Add new employee",
+      "pageTitle": "Employees"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "New employee",
+        "btnLabel": "Add new employee",
+        "confirm": {
+          "header": "Confirm",
+          "text": "Added new employee"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edit employee",
+        "btnLabel": "Save changes",
+        "confirm": {
+          "header": "Confirm",
+          "text": "Edited employee"
+        }
+      },
+      "details": {
+        "pageTitle": "Details"
+      }
+    }
+  },
+  "cont": {
+    "fields": {
+      "desc": "Description",
+      "start": "Start date",
+      "end": "Due date",
+      "respDept": "Responsible Department"
+    },
+    "list": {
+      "empty": "There are no contracts to display!",
+      "title": "Contracts",
+      "addNew": "Add new Contract",
+      "pageTitle": "Contracts list"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "New contract",
+        "btnLabel": "Add new contract",
+        "confirm": {
+          "header": "Confirmation",
+          "text": "Contract added"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edit contract",
+        "btnLabel": "Save changes",
+        "confirm": {
+          "header": "Confirmation",
+          "text": "Edited contract"
+        }
+      },
+      "details": {
+        "pageTitle": "Details"
+      }
+    }
+  },
+  "dept": {
+    "fields": {
+      "name": "Name",
+      "loc": "Location"
+    },
+    "list": {
+      "empty": "There are no departments to display!",
+      "title": "Departments",
+      "addNew": "Add new department",
+      "pageTitle": "Departments list"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "New department",
+        "btnLabel": "Add new department",
+        "confirm": {
+          "header": "Confirmation",
+          "text": "Added department"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edit department",
+        "btnLabel": "Save changes",
+        "confirm": {
+          "header": "Confirmation",
+          "text": "Edited department"
+        }
+      },
+      "details": {
+        "pageTitle": "Details"
+      }
+    }
+  }, "internalError": "Something went wrong on the server :("
+}

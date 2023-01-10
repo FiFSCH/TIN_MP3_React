@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {getContsApiCall} from "../../apiCalls/contApiCalls";
 import ContListTable from "./ContListTable";
 import {deleteContApiCall} from "../../apiCalls/contApiCalls";
-
+import {withTranslation} from "react-i18next";
 
 class ContList extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class ContList extends React.Component {
         }
     }
     handleDelete = (id) => {
-        if (window.confirm('Are you sure?'))
+        if (window.confirm(this.props.t('confirm')))
             deleteContApiCall(id).then(() => this.fetchConts());
     }
 
@@ -43,19 +43,19 @@ class ContList extends React.Component {
         const {error, isLoaded, contracts} = this.state;
         let content;
         if (error)
-            content = <p>Error: {error.message}</p>
+            content = <p>{this.props.t('error')} {error.message}</p>
         else if (!isLoaded)
-            content = <p>Loading...</p>
+            content = <p>{this.props.t('loading')}</p>
         else
             content = <ContListTable conts={contracts} handler={id => this.handleDelete(id)}/>
         return (
             <main>
-                <h2>Contracts</h2>
+                <h2>{this.props.t('cont.list.title')}</h2>
                 {content}
-                <p><Link to="/contracts/add" className="button-add"> Add new contract </Link></p>
+                <p><Link to="/contracts/add" className="button-add">{this.props.t('cont.list.addNew')}</Link></p>
             </main>
         );
     }
 }
 
-export default ContList;
+export default withTranslation() (ContList);

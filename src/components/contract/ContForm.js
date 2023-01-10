@@ -10,6 +10,7 @@ import FormInput from "../form/FormInput";
 import FormSelectDept from "../form/FormSelectDept";
 import FormButtons from "../form/FormButtons";
 import {getFormattedDate} from "../../helpers/dateHelper";
+import {withTranslation} from "react-i18next";
 
 class ContForm extends React.Component {
     constructor(props) {
@@ -198,11 +199,11 @@ class ContForm extends React.Component {
                 <Navigate to={'/contracts'}/>
             );
         }
-        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
-        const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
+        const errorsSummary = this.hasErrors() ? this.props.t('errors') : '';
+        const fetchError = this.state.error ? `${this.props.t('error')}: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         const departments = this.state.departments;
-        const pageTitle = this.state.formMode === formMode.NEW ? 'New contract' : 'Edit contract';
+        const pageTitle = this.state.formMode === formMode.NEW ? this.props.t('cont.form.add.pageTitle') : this.props.t('cont.form.edit.pageTitle');
         return (
             <main>
                 <h2>{pageTitle}</h2>
@@ -211,37 +212,34 @@ class ContForm extends React.Component {
                     <input type="hidden" name="IdCont" value=""/>
                     <FormInput
                         type="text"
-                        label="Description"
+                        label={this.props.t('cont.fields.desc')}
                         required
                         error={this.state.errors.desc}
                         name="desc"
-                        placeholder="15-350 characters"
                         onChange={this.handleChange}
                         value={this.state.cont.desc}/>
                     <FormInput
                         type="date"
-                        label="Start date"
+                        label={this.props.t('cont.fields.start')}
                         required
                         error={this.state.errors.startDate}
                         name="startDate"
-                        placeholder=""
                         onChange={this.handleChange}
                         value={this.state.cont.startDate}/>
                     <FormInput
                         type="date"
-                        label="Due date"
+                        label={this.props.t('cont.fields.end')}
                         error={this.state.errors.dueDate}
                         name="dueDate"
-                        placeholder=""
                         onChange={this.handleChange}
                         value={this.state.cont.dueDate}/>
                     <FormSelectDept
                         error={this.state.errors.IdDept}
                         name="IdDept"
                         collection={departments}
-                        placeholder="Select department"
+                        placeholder={this.props.t('cont.fields.respDept')}
                         onChange={this.handleChange}
-                        label="Department"
+                        label={this.props.t('cont.fields.respDept')}
                         required/>
                     <FormButtons
                         mode={this.state.formMode}
@@ -254,4 +252,4 @@ class ContForm extends React.Component {
     }
 }
 
-export default withRouter(ContForm);
+export default withTranslation() (withRouter(ContForm));

@@ -1,0 +1,147 @@
+{
+  "main-page": {
+    "content": "Zawartość"
+  },
+  "confirm": "Na pewno?",
+  "error": "Błąd: ",
+  "loading": "Wczytywanie...",
+  "errors": "W formularzu są błędy!",
+  "nav": {
+    "main-page": "Strona główna",
+    "employees": "Pracownicy",
+    "contracts": "Zlecenia",
+    "departments": "Oddziały"
+  },
+  "list": {
+    "options": {
+      "title": "Opcje",
+      "details": "Szczegóły",
+      "delete": "Usuń"
+    }
+  },
+  "form": {
+    "options": {
+      "return": "Powrót",
+      "edit": "Edytuj",
+      "add": "Dodaj",
+      "cancel": "Anuluj"
+    }
+  },
+  "login": {
+    "loggedAs": "Zalogowany: ",
+    "login": "Zaloguj",
+    "logout": "Wyloguj",
+    "email": "Email",
+    "password": "Hasło"
+  },
+  "emp": {
+    "fields": {
+      "firstName": "Imię",
+      "lastname": "Nazwisko",
+      "employed-since": "Zatrudniony od",
+      "employment-termination": "Koniec pracy",
+      "phone-number": "Numer telefonu",
+      "email": "Email",
+      "password": "Hasło",
+      "supervisor": "Przełożony",
+      "department": "Oddział",
+      "supervisors": "Przełożeni"
+    },
+    "list": {
+      "empty": "Brak pracowników do wyświetlenia!",
+      "title": "Pracownicy",
+      "addNew": "Dodaj nowego pracownika",
+      "pageTitle": "Lista pracowników"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "Nowy pracownik",
+        "btnLabel": "Dodaj pracownika",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie dodano pracownika"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edytuj pracownika",
+        "btnLabel": "Zapisz zmiany",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie edytowano pracownika"
+        }
+      },
+      "details": {
+        "pageTitle": "Szczegóły pracownika"
+      }
+    }
+  },
+  "cont": {
+    "fields": {
+      "desc": "Opis",
+      "start": "Data rozpoczęcia",
+      "end": "Data zakończenia",
+      "respDept": "Oddział"
+    },
+    "list": {
+      "empty": "Brak zleceń do wyświetlenia!",
+      "title": "Zlecenia",
+      "addNew": "Dodaj nowe zlecenie",
+      "pageTitle": "Lista zleceń"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "Nowe zlecenie",
+        "btnLabel": "Dodaj zlecenie",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie dodano zlecenie"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edytuj zlecenie",
+        "btnLabel": "Zapisz zmiany",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie edytowano pracownika"
+        }
+      },
+      "details": {
+        "pageTitle": "Szczegóły zlecenia"
+      }
+    }
+  },
+  "dept": {
+    "fields": {
+      "name": "Nazwa",
+      "loc": "Lokalizacja"
+    },
+    "list": {
+      "empty": "Brak oddziałów do wyświetlenia!",
+      "title": "Oddziały",
+      "addNew": "Dodaj nowy oddział",
+      "pageTitle": "Lista oddziałów"
+    },
+    "form": {
+      "add": {
+        "pageTitle": "Nowy oddział",
+        "btnLabel": "Dodaj oddział",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie dodano oddział"
+        }
+      },
+      "edit": {
+        "pageTitle": "Edytuj oddział",
+        "btnLabel": "Zapisz zmiany",
+        "confirm": {
+          "header": "Potwierdzenie operacji",
+          "text": "Pomyślnie edytowano oddział"
+        }
+      },
+      "details": {
+        "pageTitle": "Szczegóły oddziału"
+      }
+    }
+  },
+  "internalError": "Wygląda na to że server spadł z rowerka :("
+}

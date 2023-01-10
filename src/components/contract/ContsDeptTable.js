@@ -1,15 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 const ContsDeptTable = ({departments}) => {
+    const {t} = useTranslation()
     if (departments.length === 0)
         return (<></>);
     return(<>
-        <h3>Departments< /h3>
+        <h3>{t('cont.fields.respDept')}</h3>
         <table id="responsibleDepartment" className="table-list-resDept">
             <thead>
             <tr>
-                <th>Responsible Department</th>
-                <th>Location</th>
+                <th>{t('cont.fields.respDept')}</th>
+                <th>{t('dept.fields.loc')}</th>
             </tr>
             </thead>
             <tbody>

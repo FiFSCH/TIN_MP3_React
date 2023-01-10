@@ -1,18 +1,20 @@
 import React from "react";
 import EmpListTableRow from "./EmpListTableRow";
+import {useTranslation} from "react-i18next";
 
 const EmpListTable = ({employees, handler}) => {
+    const {t} = useTranslation();
     if(employees.length === 0)
-        return <p>There are no employees to display!</p>
+        return <p>{t('emp.list.empty')}</p>
     return (
         <table className="table-list">
             <thead>
             <tr key='headings'>
-                <th>First name</th>
-                <th>Lastname</th>
-                <th>Phone number</th>
-                <th>Email</th>
-                <th>Options</th>
+                <th>{t('emp.fields.firstName')}</th>
+                <th>{t('emp.fields.lastname')}</th>
+                <th>{t('emp.fields.phone-number')}</th>
+                <th>{t('emp.fields.email')}</th>
+                <th>{t('list.options.title')}</th>
             </tr>
             </thead>
             <tbody>

@@ -2,6 +2,7 @@ import React from "react";
 import {getEmpByIdApiCall} from "../../apiCalls/empApiCalls";
 import EmpDetailsData from "./EmpDetailsData";
 import withRouter from "../../helpers/withRouter";
+import {withTranslation} from "react-i18next";
 
 class EmpDetails extends React.Component {
     constructor(props) {
@@ -43,20 +44,20 @@ class EmpDetails extends React.Component {
         const {emp, error, isLoaded, message} = this.state;
         let content;
         if (error)
-            content = <p>Error: {error.message}</p>
+            content = <p>{this.props.t('error')}{error.message}</p>
         else if (!isLoaded)
-            content = <p>Loading...</p>
+            content = <p>{this.props.t('loading')}</p>
         else if (message)
             content = <p> {message}</p>
         else
             content = <EmpDetailsData empData={emp}/>
         return (
             <main>
-                <h2>Employee Details</h2>
+                <h2>{this.props.t('emp.form.details.pageTitle')}</h2>
                 {content}
             </main>
         );
     }
 }
 
-export default withRouter(EmpDetails);
+export default withTranslation()(withRouter(EmpDetails));

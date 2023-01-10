@@ -16,6 +16,7 @@ import {
 import FormSelectDept from "../form/FormSelectDept";
 import FormSelectEmp from "../form/FormSelectEmp";
 import {getFormattedDate} from "../../helpers/dateHelper";
+import {withTranslation} from "react-i18next";
 
 class EmpForm extends React.Component {
     constructor(props) {
@@ -270,39 +271,37 @@ class EmpForm extends React.Component {
             return (<Navigate to='/internalError'/>);
         }
 
-        const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
-        const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
+        const errorsSummary = this.hasErrors() ?  this.props.t('errors') : '';
+        const fetchError = this.state.error ? `${this.props.t('error')}: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         const employees = this.state.employees;
         const departments = this.state.departments;
-        const pageTitle = this.state.formMode === formMode.NEW ? 'New employee' : 'Edit employee';
+        const pageTitle = this.state.formMode === formMode.NEW ? this.props.t('emp.form.add.pageTitle') : this.props.t('emp.form.edit.pageTitle');
         return (
             <main>
                 <h2>{pageTitle}</h2>
                 <form className="form" onSubmit={this.handleSubmit}>
                     <FormInput
                         type="text"
-                        label="First name"
+                        label={this.props.t('emp.fields.firstName')}
                         required
                         error={this.state.errors.fname}
                         name="fname"
-                        placeholder="2-60 characters"
                         onChange={this.handleChange}
                         value={this.state.emp.fname}
                     />
                     <FormInput
                         type="text"
-                        label="Lastname"
+                        label={this.props.t('emp.fields.lastname')}
                         required
                         error={this.state.errors.lname}
                         name="lname"
-                        placeholder="2-60 characters"
                         onChange={this.handleChange}
                         value={this.state.emp.lname}
                     />
                     <FormInput
                         type="date"
-                        label="Employed since"
+                        label={this.props.t('emp.fields.employed-since')}
                         required
                         error={this.state.errors.employedFrom}
                         name="employedFrom"
@@ -311,7 +310,7 @@ class EmpForm extends React.Component {
                     />
                     <FormInput
                         type="date"
-                        label="Employed to"
+                        label={this.props.t('emp.fields.employment-termination')}
                         error={this.state.errors.dateTo}
                         name="dateTo"
                         onChange={this.handleChange}
@@ -319,27 +318,25 @@ class EmpForm extends React.Component {
                     />
                     <FormInput
                         type="text"
-                        label="Phone number"
+                        label={this.props.t('emp.fields.phone-number')}
                         required
                         error={this.state.errors.phone}
                         name="phone"
-                        placeholder="2-15 characters"
                         onChange={this.handleChange}
                         value={this.state.emp.phone}
                     />
                     <FormInput
                         type="text"
-                        label="Email"
+                        label={this.props.t('emp.fields.email')}
                         required
                         error={this.state.errors.email}
                         name="email"
-                        placeholder="sample@email.com"
                         onChange={this.handleChange}
                         value={this.state.emp.email}
                     />
                     <FormInput
                         type="password"
-                        label="Password"
+                        label={this.props.t('emp.fields.password')}
                         required
                         error={this.state.errors.password}
                         name="password"
@@ -350,17 +347,17 @@ class EmpForm extends React.Component {
                         error={this.state.errors.supervisors}
                         name="supervisors"
                         collection={employees}
-                        placeholder="Select supervisor"
+                        placeholder={this.props.t('emp.fields.supervisors')}
                         onChange={this.handleChange}
-                        label="Supervisor"
+                        label={this.props.t('emp.fields.supervisors')}
                     />
                     <FormSelectDept
                         error={this.state.errors.departments}
                         name="departments"
                         collection={departments}
-                        placeholder="Select department"
+                        placeholder={this.props.t('emp.fields.department')}
                         onChange={this.handleChange}
-                        label="Department"
+                        label={this.props.t('emp.fields.department')}
                         required/>
                     <FormButtons
                         mode={this.state.formMode}
@@ -373,4 +370,4 @@ class EmpForm extends React.Component {
     }
 }
 
-export default withRouter(EmpForm);
+export default withTranslation() (withRouter(EmpForm));

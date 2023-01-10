@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
 import DeptListTable from "./DeptListTable";
 import {deleteDeptApiCall} from "../../apiCalls/deptApiCalls";
+import {withTranslation} from "react-i18next";
 
 class DeptList extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class DeptList extends React.Component {
     }
 
     handleDelete = (id) => {
-        if (window.confirm('Are you sure?'))
+        if (window.confirm(this.props.t('confirm')))
             deleteDeptApiCall(id).then(() => this.fetchDepts());
     }
     componentDidMount() {
@@ -42,19 +43,19 @@ class DeptList extends React.Component {
         const {error, isLoaded, departments} = this.state;
         let content;
         if (error)
-            content = <p>Error: {error.message}</p>
+            content = <p>{this.props.t('error')} {error.message}</p>
         else if (!isLoaded)
-            content = <p>Loading...</p>
+            content = <p>{this.props.t('loading')}</p>
         else
             content = <DeptListTable depts={departments} handler={id => this.handleDelete(id)}/>
         return (
             <main>
-                <h2>Departments</h2>
+                <h2>{this.props.t('dept.list.title')}</h2>
                 {content}
-                <p><Link to="/departments/add" className="button-add">Add new department</Link></p>
+                <p><Link to="/departments/add" className="button-add">{this.props.t('dept.list.addNew')}</Link></p>
             </main>
         );
     }
 }
 
-export default DeptList;
+export default withTranslation() (DeptList);

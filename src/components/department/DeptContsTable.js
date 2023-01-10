@@ -1,17 +1,19 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const DeptContsTable = ({contracts}) => {
+    const {t} = useTranslation();
     if (contracts.length === 0)
         return (<></>);
     return (
         <>
-            <h3>Contracts< /h3>
+            <h3>{t('nav.contracts')}< /h3>
             <table id="contracts" className="table-list-resDept">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Description</th>
+                    <th>{t('cont.fields.desc')}</th>
                 </tr>
                 </thead>
                 <tbody>

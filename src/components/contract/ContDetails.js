@@ -2,7 +2,7 @@ import React from "react";
 import withRouter from "../../helpers/withRouter";
 import {getContByIdApiCall} from "../../apiCalls/contApiCalls";
 import ContDetailsData from "./ContDetailsData";
-
+import {withTranslation} from "react-i18next";
 class ContDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -42,20 +42,20 @@ class ContDetails extends React.Component {
         const {cont, error, isLoaded, message} = this.state;
         let content;
         if (error)
-            content = <p>Error: {error.message}</p>
+            content = <p>{this.props.t('error')} {error.message}</p>
         else if (!isLoaded)
-            content = <p>Loading...</p>
+            content = <p>{this.props.t('loading')}</p>
         else if (message)
             content = <p> {message}</p>
         else
             content = <ContDetailsData contData={cont}/>
         return (
             <main>
-                <h2>Contract Details</h2>
+                <h2>{this.props.t('cont.form.details.pageTitle')}</h2>
                 {content}
             </main>
         );
     }
 }
 
-export default withRouter(ContDetails);
+export default withTranslation() (withRouter(ContDetails));

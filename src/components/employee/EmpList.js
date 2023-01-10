@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {getEmpsApiCall} from "../../apiCalls/empApiCalls";
 import EmpListTable from "./EmpListTable";
 import {deleteEmpApiCall} from "../../apiCalls/empApiCalls";
+import {withTranslation} from "react-i18next";
 
 class EmpList extends React.Component {
 
@@ -29,7 +30,7 @@ class EmpList extends React.Component {
         });
     }
     handleDelete = (id) => {
-        if (window.confirm('Are you sure?'))
+        if (window.confirm(this.props.t('confirm')))
             deleteEmpApiCall(id).then(() => this.fetchEmps());
     }
 
@@ -42,20 +43,20 @@ class EmpList extends React.Component {
         const {error, isLoaded, employees} = this.state;
         let content;
         if (error)
-            content = <p>Error: {error.message}</p>
+            content = <p>{this.props.t('error')}{error.message}</p>
         else if (!isLoaded)
-            content = <p>Loading...</p>
+            content = <p>{this.props.t('loading')}</p>
         else
             content = <EmpListTable employees={employees} handler={id => this.handleDelete(id)}/>
         return (
             <main>
-                <h2>Employees</h2>
+                <h2>{this.props.t('emp.list.title')}</h2>
                 {content}
-                <p className="section-buttons"><Link to="/employees/add" className="button-add">Add new employee</Link>
+                <p className="section-buttons"><Link to="/employees/add" className="button-add">{this.props.t('emp.list.addNew')}</Link>
                 </p>
             </main>
         );
     }
 }
 
-export default EmpList;
+export default withTranslation()(EmpList);
