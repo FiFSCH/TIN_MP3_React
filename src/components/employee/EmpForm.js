@@ -50,7 +50,8 @@ class EmpForm extends React.Component {
             },
             formMode: currentFormMode,
             redirect: false,
-            error: null
+            error: null,
+            internalError: false
         };
     }
 
@@ -250,8 +251,7 @@ class EmpForm extends React.Component {
                             }
                         },
                         (error) => {
-                            this.setState({error});
-                            console.log(error);
+                            this.setState({internalError: true})
                         }
                     );
             }
@@ -265,6 +265,11 @@ class EmpForm extends React.Component {
                 <Navigate to={'/employees'}/>
             );
         }
+        const {internalError} = this.state;
+        if (internalError) {
+            return (<Navigate to='/internalError'/>);
+        }
+
         const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
         const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;

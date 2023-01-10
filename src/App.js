@@ -3,6 +3,7 @@ import Navigation from "./components/ fragments/Navigation";
 import MainContent from "./components/other/MainContent";
 import Footer from "./components/ fragments/Footer";
 import EmpList from "./components/employee/EmpList";
+import InternalError from "./components/other/InternalError";
 import {
     BrowserRouter as Router,
     Routes,
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/contracts/details/:contId" element={<ContDetails/>}/>
                     <Route path="/contracts/edit/:contId" element={<ContForm/>}/>
                     <Route path="/contracts/add" element={<ContForm/>}/>
+                    <Route path="/internalError" element={<InternalError/>}/>
                 </Routes>
                 <Footer/>
             </>

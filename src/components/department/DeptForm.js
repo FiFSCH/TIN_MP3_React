@@ -23,7 +23,8 @@ class DeptForm extends React.Component {
             },
             formMode: currentFormMode,
             redirect: false,
-            error: null
+            error: null,
+            internalError: false
         };
     }
 
@@ -134,8 +135,7 @@ class DeptForm extends React.Component {
                             }
                         },
                         (error) => {
-                            this.setState({error});
-                            console.log(error);
+                            this.setState({internalError: true})
                         }
                     );
             }
@@ -170,6 +170,10 @@ class DeptForm extends React.Component {
             return (
                 <Navigate to={'/departments'}/>
             );
+        }
+        const {internalError} = this.state;
+        if (internalError) {
+            return (<Navigate to='/internalError'/>);
         }
         const errorsSummary = this.hasErrors() ? 'There are errors!' : '';
         const fetchError = this.state.error ? `Error: ${this.state.error.message}` : '';
