@@ -1,16 +1,28 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import {withTranslation} from "react-i18next";
+import withRouter from "../../helpers/withRouter";
 
-const Navigation = () => {
-    const {t} = useTranslation();
-    return (<nav>
-        <ul>
-            <li><Link to="/">{t('nav.main-page')}</Link></li>
-            <li><Link to="/employees">{t('nav.employees')}</Link></li>
-            <li><Link to="/contracts">{t('nav.contracts')}</Link></li>
-            <li><Link to="/departments">{t('nav.departments')}</Link></li>
-        </ul>
-    </nav>);
+class Navigation extends React.Component {
+    handleLanguageChange = lang => {
+        const {i18n} = this.props;
+        i18n.changeLanguage(lang, (err, t) => {
+            if (err) return console.log(err);
+        })
+    }
+
+    render() {
+        return (<nav>
+            <ul>
+                <li><Link to="/">{this.props.t('nav.main-page')}</Link></li>
+                <li><Link to="/employees">{this.props.t('nav.employees')}</Link></li>
+                <li><Link to="/contracts">{this.props.t('nav.contracts')}</Link></li>
+                <li><Link to="/departments">{this.props.t('nav.departments')}</Link></li>
+                <li className="lang"><button onClick={() => this.handleLanguageChange('pl')}>PL</button></li>
+                <li className="lang"><button onClick={() => this.handleLanguageChange('en')}>EN</button></li>
+            </ul>
+        </nav>);
+    }
 }
-export default Navigation;
+
+export default withTranslation()(withRouter(Navigation));
