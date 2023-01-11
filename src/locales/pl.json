@@ -29,7 +29,7 @@
   },
   "login": {
     "loggedAs": "Zalogowany: ",
-    "login": "Zaloguj",
+    "login": "Zaloguj się",
     "logout": "Wyloguj",
     "email": "Email",
     "password": "Hasło"

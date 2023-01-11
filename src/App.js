@@ -21,6 +21,7 @@ import ContForm from "./components/contract/ContForm";
 import withRouter from "./helpers/withRouter";
 import LoginForm from "./components/other/LoginForm";
 import {getCurrentUser} from "./helpers/authHelper";
+import ProtectedRoutes from "./components/other/ProtectedRoutes";
 
 class App extends React.Component {
     constructor(props) {
@@ -52,22 +53,24 @@ class App extends React.Component {
                     <Header/>
                     <Navigation handleLogout={this.handleLogout}/>
                     <Routes>
+                        <Route element={<ProtectedRoutes/>}>
+                            <Route path="/employees" element={<EmpList/>}/>
+                            <Route path="/employees/details/:empId" element={<EmpDetails/>}/>
+                            <Route path="/employees/details/" element={<EmpList/>}/>
+                            <Route path="/employees/edit/:empId" element={<EmpForm/>}/>
+                            <Route path="/employees/add" element={<EmpForm/>}/>
+                            <Route path="/departments/details/:deptId" element={<DeptDetails/>}/>
+                            <Route path="/departments/details/" element={<DeptList/>}/>
+                            <Route path="/departments/edit/:deptId" element={<DeptForm/>}/>
+                            <Route path="/departments/add" element={<DeptForm/>}/>
+                            <Route path="/contracts" element={<ContList/>}/>
+                            <Route path="/contracts/details/:contId" element={<ContDetails/>}/>
+                            <Route path="/contracts/edit/:contId" element={<ContForm/>}/>
+                            <Route path="/contracts/add" element={<ContForm/>}/>
+                        </Route>
                         <Route path="/" element={<MainContent/>}/>
                         <Route path="/login" element={<LoginForm handleLogin={this.handleLogin}/>}/>
-                        <Route path="/employees" element={<EmpList/>}/>
-                        <Route path="/employees/details/:empId" element={<EmpDetails/>}/>
-                        <Route path="/employees/details/" element={<EmpList/>}/>
-                        <Route path="/employees/edit/:empId" element={<EmpForm/>}/>
-                        <Route path="/employees/add" element={<EmpForm/>}/>
                         <Route path="/departments" element={<DeptList/>}/>
-                        <Route path="/departments/details/:deptId" element={<DeptDetails/>}/>
-                        <Route path="/departments/details/" element={<DeptList/>}/>
-                        <Route path="/departments/edit/:deptId" element={<DeptForm/>}/>
-                        <Route path="/departments/add" element={<DeptForm/>}/>
-                        <Route path="/contracts" element={<ContList/>}/>
-                        <Route path="/contracts/details/:contId" element={<ContDetails/>}/>
-                        <Route path="/contracts/edit/:contId" element={<ContForm/>}/>
-                        <Route path="/contracts/add" element={<ContForm/>}/>
                         <Route path="/internalError" element={<InternalError/>}/>
                     </Routes>
                     <Footer/>

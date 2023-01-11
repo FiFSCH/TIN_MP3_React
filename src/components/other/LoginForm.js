@@ -116,6 +116,7 @@ class LoginForm extends React.Component {
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         return (
             <main>
+                <h2>{this.props.t('login.login')}</h2>
                 <div id="login">
                     <form className="form" method="post" onSubmit={this.handleSubmit}>
                         <FormInput
