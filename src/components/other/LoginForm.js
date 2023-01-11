@@ -5,6 +5,7 @@ import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import loginApiCall from "../../apiCalls/authApiCalls";
 import {checkRequired} from "../../helpers/ValidationCommon";
+import {Navigate} from "react-router-dom";
 
 
 class LoginForm extends React.Component {
@@ -21,7 +22,8 @@ class LoginForm extends React.Component {
             },
             error: '',
             message: '',
-            prevPath: ''
+            prevPath: '',
+            redirect: false
         }
     }
 
@@ -56,10 +58,11 @@ class LoginForm extends React.Component {
                             if (data.token) {
                                 const userString = JSON.stringify(data);
                                 this.props.handleLogin(userString);
+                                this.setState({redirect: true})
                                 //this.props.history.goBack();
                             }
                         } else if (response.status === 401) {
-                            this.setState({message: data.message});
+                            this.setState({message: data.messge});
                         }
                     },
                     (error) => {
@@ -102,6 +105,12 @@ class LoginForm extends React.Component {
     };
 
     render() {
+        const {redirect} = this.state;
+        if (redirect) {
+            return (
+                <Navigate to={'/'}/>
+            );
+        }
         const errorsSummary = this.hasErrors() ? this.props.t('errors') : '';
         const fetchError = this.state.error ? `${this.props.t('error')}: ${this.state.error.message}` : '';
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
@@ -126,10 +135,9 @@ class LoginForm extends React.Component {
                             value={this.state.user.password}
                         />
                         <FormButtons
-                            mode={this.state.prevPath}
                             error={globalErrorMessage}
                             lbl={this.props.t('login.login')}
-                            cancelPath={this.state.prevPath}
+                            cancelPath="/"
                         />
                     </form>
                 </div>

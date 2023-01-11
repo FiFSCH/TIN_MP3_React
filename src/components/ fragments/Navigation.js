@@ -19,8 +19,10 @@ class Navigation extends React.Component {
         return (<nav>
             <ul>
                 <li><Link to="/">{this.props.t('nav.main-page')}</Link></li>
-                <li><Link to="/employees">{this.props.t('nav.employees')}</Link></li>
-                <li><Link to="/contracts">{this.props.t('nav.contracts')}</Link></li>
+                {isAuthenticated() && <>
+                    <li><Link to="/employees">{this.props.t('nav.employees')}</Link></li>
+                    <li><Link to="/contracts">{this.props.t('nav.contracts')}</Link></li>
+                </>}
                 <li><Link to="/departments">{this.props.t('nav.departments')}</Link></li>
                 <li className="lang">{loginLogoutLink}</li>
                 <li className="lang">

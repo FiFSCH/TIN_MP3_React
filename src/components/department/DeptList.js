@@ -4,6 +4,7 @@ import {getDeptsApiCall} from "../../apiCalls/deptApiCalls";
 import DeptListTable from "./DeptListTable";
 import {deleteDeptApiCall} from "../../apiCalls/deptApiCalls";
 import {withTranslation} from "react-i18next";
+import {isAuthenticated} from "../../helpers/authHelper";
 
 class DeptList extends React.Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class DeptList extends React.Component {
         if (window.confirm(this.props.t('confirm')))
             deleteDeptApiCall(id).then(() => this.fetchDepts());
     }
+
     componentDidMount() {
         this.fetchDepts();
     }
@@ -52,10 +54,12 @@ class DeptList extends React.Component {
             <main>
                 <h2>{this.props.t('dept.list.title')}</h2>
                 {content}
-                <p><Link to="/departments/add" className="button-add">{this.props.t('dept.list.addNew')}</Link></p>
+                {isAuthenticated() && <>
+                    <p><Link to="/departments/add" className="button-add">{this.props.t('dept.list.addNew')}</Link></p>
+                </>}
             </main>
         );
     }
 }
 
-export default withTranslation() (DeptList);
+export default withTranslation()(DeptList);

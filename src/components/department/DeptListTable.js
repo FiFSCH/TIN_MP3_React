@@ -1,6 +1,7 @@
 import React from "react";
 import DeptListTableRow from "./DeptListTableRow";
 import {useTranslation} from "react-i18next";
+import {isAuthenticated} from "../../helpers/authHelper";
 
 
 const DeptListTable = ({depts, handler}) => {
@@ -13,7 +14,9 @@ const DeptListTable = ({depts, handler}) => {
             <tr key='headings'>
                 <th>{t('dept.fields.name')}</th>
                 <th>{t('dept.fields.loc')}</th>
-                <th>{t('list.options.title')}</th>
+                {isAuthenticated() && <>
+                    <th>{t('list.options.title')}</th>
+                </>}
             </tr>
             </thead>
             <tbody>
