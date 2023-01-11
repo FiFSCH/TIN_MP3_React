@@ -326,7 +326,7 @@ class EmpForm extends React.Component {
                         value={this.state.emp.phone}
                     />
                     <FormInput
-                        type="text"
+                        type="email"
                         label={this.props.t('emp.fields.email')}
                         required
                         error={this.state.errors.email}
