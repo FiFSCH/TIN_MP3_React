@@ -33,11 +33,11 @@ class App extends React.Component {
     }
 
     handleLogin = (user) => {
-        localStorage.setItem("user", user);
+        sessionStorage.setItem("user", user);
         this.setState({user: user});
     }
     handleLogout = () => {
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
         this.setState({user: undefined});
     }
 
