@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "./components/ fragments/Header";
 import Navigation from "./components/ fragments/Navigation";
 import MainContent from "./components/other/MainContent";
@@ -18,40 +18,41 @@ import DeptForm from "./components/department/DeptForm";
 import ContList from "./components/contract/ContList";
 import ContDetails from "./components/contract/ContDetails";
 import ContForm from "./components/contract/ContForm";
-import withRouter from "./helpers/withRouter";
 import LoginForm from "./components/other/LoginForm";
 import {getCurrentUser} from "./helpers/authHelper";
 import ProtectedRoutes from "./components/other/ProtectedRoutes";
+import {useState, createContext} from "react";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: undefined,
-            prevPath: ""
-        }
+const ThemeContext = createContext(null);
+
+const App = () => {
+    const [user, setUser] = useState(undefined);
+    const [theme, setTheme] = useState("light");
+
+    const switchTheme = () => {
+        setTheme(curr => curr === "light" ? "dark" : "light");
     }
 
-    handleLogin = (user) => {
+    const handleLogin = (user) => {
         sessionStorage.setItem("user", user);
-        this.setState({user: user});
+        setUser(user);
     }
-    handleLogout = () => {
+    const handleLogout = () => {
         sessionStorage.removeItem("user");
-        this.setState({user: undefined});
+        setUser(undefined);
     }
 
-    componentDidMount() {
+    useEffect(() => {
         const currentUser = getCurrentUser();
-        this.setState({user: currentUser});
-    }
+        setUser(currentUser);
+    }, [])
 
-    render() {
-        return (
-            <Router>
-                <>
+    return (
+        <Router>
+            <ThemeContext.Provider value={{theme, switchTheme}}>
+                <div id={theme}>
                     <Header/>
-                    <Navigation handleLogout={this.handleLogout}/>
+                    <Navigation handleLogout={handleLogout} switchTheme={switchTheme} theme={theme}/>
                     <Routes>
                         <Route element={<ProtectedRoutes/>}>
                             <Route path="/employees" element={<EmpList/>}/>
@@ -69,15 +70,15 @@ class App extends React.Component {
                             <Route path="/contracts/add" element={<ContForm/>}/>
                         </Route>
                         <Route path="/" element={<MainContent/>}/>
-                        <Route path="/login" element={<LoginForm handleLogin={this.handleLogin}/>}/>
+                        <Route path="/login" element={<LoginForm handleLogin={handleLogin}/>}/>
                         <Route path="/departments" element={<DeptList/>}/>
                         <Route path="/internalError" element={<InternalError/>}/>
                     </Routes>
                     <Footer/>
-                </>
-            </Router>
-        );
-    }
+                </div>
+            </ThemeContext.Provider>
+        </Router>
+    );
 }
 
-export default withRouter(App);
+export default App;

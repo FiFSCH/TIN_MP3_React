@@ -22,7 +22,6 @@ class LoginForm extends React.Component {
             },
             error: '',
             message: '',
-            prevPath: '',
             redirect: false
         }
     }

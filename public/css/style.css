@@ -1,10 +1,12 @@
 html {
     background-color: #ecf0f1;
     font-family: sans-serif;
+    min-height: 100%;
 }
 
 body {
     min-width: 360px;
+    min-height: 100%;
 }
 
 header, main, footer {
@@ -390,6 +392,44 @@ textarea {
 
 }
 
+
 #logo {
     border-radius: 5px;
+}
+
+#light {
+    background-color: white;
+}
+
+#dark {
+    background-color: #2C3639;
+}
+
+#dark main {
+    background-color: #2C3639;
+    color: #E8EAED;
+}
+
+#dark .table-list, .table-list-resDept {
+    background-color: lightgray;
+}
+
+#dark tr:nth-child(even) {
+    background-color: #9ea1a3;
+}
+
+#dark nav {
+    background-color: #9ea1a3;
+}
+
+#dark th {
+    background-color: #9ea1a3;
+}
+
+input {
+    background-color: #ecf0f1;
+}
+
+a{
+    color: inherit;
 }
