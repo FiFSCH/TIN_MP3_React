@@ -2,6 +2,8 @@
   "main-page": {
     "content": "Zawartość"
   },
+  "light" : "Jasny",
+  "dark" : "Ciemny",
   "confirm": "Na pewno?",
   "error": "Błąd: ",
   "loading": "Wczytywanie...",

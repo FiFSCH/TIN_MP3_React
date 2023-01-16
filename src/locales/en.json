@@ -2,6 +2,8 @@
   "main-page": {
     "content": "Content"
   },
+  "light" : "Light",
+  "dark" : "Dark",
   "confirm": "Are you sure?",
   "error": "Error: ",
   "loading": "Loading...",

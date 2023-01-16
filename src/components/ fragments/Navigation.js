@@ -32,7 +32,7 @@ class Navigation extends React.Component {
                     <button onClick={() => this.handleLanguageChange('en')}>EN</button>
                 </li>
                 <li>
-                    {this.props.theme === "light" ?<button onClick={() => this.props.switchTheme()}>Dark</button> : <button onClick={() => this.props.switchTheme()}>Light</button>}
+                    {this.props.theme === "light" ?<button onClick={() => this.props.switchTheme()}>{this.props.t('dark')}</button> : <button onClick={() => this.props.switchTheme()}>{this.props.t('light')}</button>}
                 </li>
             </ul>
         </nav>);
