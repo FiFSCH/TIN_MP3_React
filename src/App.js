@@ -28,9 +28,17 @@ const ThemeContext = createContext(null);
 const App = () => {
     const [user, setUser] = useState(undefined);
     const [theme, setTheme] = useState("light");
+    const [bodyColor, setBodyColor] = useState("#1d2426")
 
     const switchTheme = () => {
         setTheme(curr => curr === "light" ? "dark" : "light");
+        if (theme === "light") {
+            setBodyColor("#ecf0f1");
+            document.body.style.background = bodyColor;
+        } else if (theme === "dark") {
+            setBodyColor("#1d2426")
+            document.body.style.background = bodyColor;
+        }
     }
 
     const handleLogin = (user) => {
