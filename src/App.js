@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import Header from "./components/ fragments/Header";
-import Navigation from "./components/ fragments/Navigation";
+import Header from "./components/fragments/Header";
+import Navigation from "./components/fragments/Navigation";
 import MainContent from "./components/other/MainContent";
-import Footer from "./components/ fragments/Footer";
+import Footer from "./components/fragments/Footer";
 import EmpList from "./components/employee/EmpList";
 import InternalError from "./components/other/InternalError";
 import {
